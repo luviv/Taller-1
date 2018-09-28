@@ -21,15 +21,11 @@ public class Main extends PApplet {
 	}
 	
 	public void draw() {
-		logica.pintarFondo();
-		logica.letrasCthulhu();
-		logica.pintarRocasIz();
-		logica.pintarRocasDer();
-		logica.pintarEstrellas();
+		logica.pintar();
 	}
 	
 	public void mousePressed() {
-		
+		logica.click();
 	}
 	
 	public void mouseDragged() {

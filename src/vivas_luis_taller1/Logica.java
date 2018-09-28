@@ -7,12 +7,14 @@ public class Logica {
 	
 	private Main app;
 	private LinkedList<Figura> figuras;
+	private ArrayList<Burbuja> burbujas;
 	private Estrella[] estrellas;
 	private String[] texto;
 	private String[] palabras;
 	private float x, y, tam;
 	private Figura selector;
-	private boolean arrastrar, pintarTentaculo, validarEstrellas;
+	private int contador, opacidad;
+	private boolean arrastrar, pintarTentaculo, validarEstrellas, crearBurbujas, pintarRayo;
 	private StringBuffer cthu = new StringBuffer("       ");
 
 	public Logica(Main app) {
@@ -20,8 +22,13 @@ public class Logica {
 		figuras  = new LinkedList<Figura>();
 		selector = null;
 		arrastrar = false;
+		crearBurbujas = false;
+		pintarRayo = false;
+		contador = -5000;
+		opacidad = 100;
 		texto = app.loadStrings("texto.txt");
 //		System.out.println(texto.length);
+		burbujas = new ArrayList<Burbuja>();
 		palabras = app.splitTokens(texto[0]);
 		app.textSize(40);
 		for (int i = 0; i < palabras.length; i++) {
@@ -31,6 +38,64 @@ public class Logica {
 		for (int i = 0; i < estrellas.length; i++) {
 			estrellas[i] = new Estrella(app);
 		}
+	}
+	
+	public void pintar() {
+		pintarFondo();
+		letrasCthulhu();
+		pintarRocasIz();
+		pintarRocasDer();
+		pintarEstrellas();
+		interBur();
+		pintarR();
+		if(!app.mousePressed) {
+			contador = -5000;
+		}
+	}
+	
+	public void pintarR() {
+		if(app.millis()-contador > 950 && app.millis()-contador < 1050) {
+			pintarRayo = true;
+			app.frameCount = 0;
+		}
+		
+		if(pintarRayo) {
+			if(app.frameCount < 60) {
+				app.fill(0, 0, 100);
+				app.quad(550, 0, 625, 0, 575, 50, 500, 50);
+				app.quad(538, 50, 613, 50, 575, 100, 500, 100);
+				app.triangle(537, 100, 612, 100, 500, 200);
+				opacidad = 100;
+			} else {
+				pintarRayo = false;
+			}
+		} else if(app.frameCount < 120) {
+			app.fill(0, 0, 100, opacidad);
+			app.rect(0, 0, app.width, app.height);
+			opacidad -= 3;
+		}
+	}
+	
+	public void interBur() {
+		if(app.frameCount%20 == 0 && crearBurbujas) {
+			burbujas.add(new Burbuja(app));
+		}
+		
+		for(int i = burbujas.size()-1; i >= 0; i--) {
+			Burbuja b = burbujas.get(i);
+			b.pintar();
+			if(b.getY() < 202) {
+				burbujas.remove(i);
+			}
+		}
+	}
+	
+	public void click() {
+		if(app.dist(app.mouseX, app.mouseY, app.width/2, app.height) < 300) {
+			crearBurbujas = !crearBurbujas;
+		}
+		
+		contador = app.millis();
 	}
 	
 	public void pintarFondo() {
@@ -179,6 +244,7 @@ public class Logica {
 	}
 	
 	public void rocasIz() {
+		
 		if(app.dist(app.mouseX, app.mouseY, 0, 600) < 150 || app.dist(app.mouseX, app.mouseY, 100, 700) < 150 || app.dist(app.mouseX, app.mouseY, 0, 700) < 150 ) {
 			pintarTentaculo = true;
 		} else {pintarTentaculo = false;}
