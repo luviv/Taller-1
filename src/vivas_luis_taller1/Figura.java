@@ -11,6 +11,6 @@ public abstract class Figura {
 		mover = false;
 	}
 	
-	public abstract void pintar(Main app);
+	public abstract void pintar();
 
 }

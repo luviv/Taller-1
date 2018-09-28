@@ -7,12 +7,11 @@ public class Estrella extends Figura {
 		x = app.random(app.width);
 		y= app.random(0, 202);
 		tam = 5;
-		color = (360);
 	}
 
 	@Override
-	public void pintar(Main app) {
-		app.fill(color);
+	public void pintar() {
+		app.fill(0, 0, 100);
 		app.ellipse(x, y, tam, tam);
 		
 	}

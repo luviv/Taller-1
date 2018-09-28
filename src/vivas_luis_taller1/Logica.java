@@ -7,10 +7,10 @@ public class Logica {
 	
 	private Main app;
 	private LinkedList<Figura> figuras;
-	private ArrayList<Estrella> estrellas;
+	private Estrella[] estrellas;
 	private String[] texto;
 	private String[] palabras;
-	private float x, y, tam, mx, my;
+	private float x, y, tam;
 	private Figura selector;
 	private boolean arrastrar, pintarTentaculo, validarEstrellas;
 	private StringBuffer cthu = new StringBuffer("       ");
@@ -24,10 +24,12 @@ public class Logica {
 //		System.out.println(texto.length);
 		palabras = app.splitTokens(texto[0]);
 		app.textSize(40);
-		mx = app.mouseX;
-		my = app.mouseY;
 		for (int i = 0; i < palabras.length; i++) {
 			System.out.println(palabras[i]);
+		}
+		estrellas = new Estrella[150];
+		for (int i = 0; i < estrellas.length; i++) {
+			estrellas[i] = new Estrella(app);
 		}
 	}
 	
@@ -44,8 +46,7 @@ public class Logica {
 		app.ellipse(app.width/2, 700, 525, 625);
 		app.fill(164,42,10);
 		app.ellipse(app.width/2, 700, 300, 400);
-		app.text(mx, 100, 100);
-		app.text(my, 100, 200);
+
 	}
 	
 	public void letrasCthulhu() {
@@ -74,14 +75,42 @@ public class Logica {
 		app.quad(747, 560, 680, 575, 760, 700, 830, 700);
 		app.fill(90, 37, 47);
 		app.ellipse(app.width/2, 700, 300, 400);
+		app.noFill();
+		app.strokeWeight(50);
+		app.stroke(92, 48, 48);
+		app.arc(510, 475, 125, 125, -app.QUARTER_PI, app.HALF_PI+app.QUARTER_PI, app.OPEN);
+		app.stroke(93, 40, 58);
+		app.arc(510, 470, 125, 125, -app.QUARTER_PI, app.HALF_PI+app.QUARTER_PI, app.OPEN);
+		app.stroke(92, 48, 48);
+		app.arc(500, 535, 125, 125, -app.QUARTER_PI, app.HALF_PI+app.QUARTER_PI, app.OPEN);
+		app.stroke(93, 40, 58);
+		app.arc(500, 530, 125, 125, -app.QUARTER_PI, app.HALF_PI+app.QUARTER_PI, app.OPEN);
+		app.stroke(92, 48, 48);
+		app.arc(700, 475, 125, 125, app.QUARTER_PI, (app.HALF_PI+app.QUARTER_PI), app.OPEN);
+		app.stroke(93, 40, 58);
+		app.arc(700, 470, 125, 125, app.QUARTER_PI, (app.HALF_PI+app.QUARTER_PI), app.OPEN);
+		app.stroke(92, 48, 48);
+		app.arc(700, 535, 125, 125, app.QUARTER_PI, (app.HALF_PI+app.QUARTER_PI), app.OPEN);
+		app.stroke(93, 40, 58);
+		app.arc(700, 530, 125, 125, app.QUARTER_PI, (app.HALF_PI+app.QUARTER_PI), app.OPEN);
+		app.stroke(92, 48, 48);
+		app.arc(530, 585, 125, 125, -app.QUARTER_PI, app.HALF_PI+app.QUARTER_PI, app.OPEN);
+		app.stroke(92, 48, 48);
+		app.arc(665, 585, 125, 125, app.QUARTER_PI, (app.PI+app.QUARTER_PI), app.OPEN);
+		app.stroke(93, 40, 58);
+		app.arc(665, 580, 125, 125, app.QUARTER_PI, (app.PI+app.QUARTER_PI), app.OPEN);
+		app.stroke(93, 40, 58);
+		app.arc(530, 580, 125, 125, -app.QUARTER_PI, app.HALF_PI+app.QUARTER_PI, app.OPEN);
+		app.noStroke();
 		app.fill(93, 40, 58);
 		app.ellipse(app.width/2, 485, 200, 200);
 		app.fill(356, 88, 78);
 		app.arc(560, 465, 40, 40, 0, app.PI+app.QUARTER_PI, app.CHORD);
-		app.ellipse(640, 465, 40, 40);
+		app.arc(640, 465, 40, 40, -app.QUARTER_PI, app.PI, app.CHORD);
 		app.fill(58, 83, 91);
 		app.arc(560, 466, 33, 33, 0, app.PI+app.QUARTER_PI, app.CHORD);
-		app.ellipse(640, 465, 33, 33);
+		app.arc(640, 466, 33, 33, -app.QUARTER_PI, app.PI, app.CHORD);
+
 	}
 	
 	public void interaccionCthulhu() {
@@ -173,23 +202,18 @@ public class Logica {
 		
 	}
 	
-//	public void pintarEstrellas() {
-//		for (int i = 0; i < 50; i++) {
-//			estrellas.add(new Estrella(app));
-//		}
-//	}
+	public void pintarEstrellas() {
+		if(validarEstrellas) {
+			for (int i = 0; i < estrellas.length; i++) {
+				estrellas[i].pintar();
+			}
+		}
+		
+	}
 	
 	public void interaccionEst() {
 		if(app.key == 'e' || app.key == 'E') {
-			validarEstrellas = true;
-		}
-		
-//		if (validarEstrellas = true) {
-//			pintarEstrellas();
-//		}
-		
-		if (validarEstrellas = true && app.key == 'e' || app.key =='E') {
-			validarEstrellas = false;
+			validarEstrellas = !validarEstrellas;
 		}
 	}
 }

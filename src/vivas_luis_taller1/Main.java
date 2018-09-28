@@ -25,7 +25,7 @@ public class Main extends PApplet {
 		logica.letrasCthulhu();
 		logica.pintarRocasIz();
 		logica.pintarRocasDer();
-//		logica.pintarEstrellas();
+		logica.pintarEstrellas();
 	}
 	
 	public void mousePressed() {
