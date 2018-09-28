@@ -10,7 +10,7 @@ public class Logica {
 	private ArrayList<Estrella> estrellas;
 	private String[] texto;
 	private String[] palabras;
-	private float x, y, tam;
+	private float x, y, tam, mx, my;
 	private Figura selector;
 	private boolean arrastrar, pintarTentaculo, validarEstrellas;
 	private StringBuffer cthu = new StringBuffer("       ");
@@ -24,6 +24,8 @@ public class Logica {
 //		System.out.println(texto.length);
 		palabras = app.splitTokens(texto[0]);
 		app.textSize(40);
+		mx = app.mouseX;
+		my = app.mouseY;
 		for (int i = 0; i < palabras.length; i++) {
 			System.out.println(palabras[i]);
 		}
@@ -42,6 +44,8 @@ public class Logica {
 		app.ellipse(app.width/2, 700, 525, 625);
 		app.fill(164,42,10);
 		app.ellipse(app.width/2, 700, 300, 400);
+		app.text(mx, 100, 100);
+		app.text(my, 100, 200);
 	}
 	
 	public void letrasCthulhu() {
@@ -60,8 +64,24 @@ public class Logica {
 	}
 	
 	public void pintarCthulhu() {
-		app.fill(76, 38, 30);
-		app.ellipse(app.width/2, app.height/2, app.width/24, app.height/14);
+		app.noStroke();
+		app.ellipseMode(app.CENTER);
+		app.fill(87, 35, 53);
+		app.ellipse(485, 575, 70, 70);
+		app.quad(453, 560, 520, 575, 440, 700, 370, 700);
+		app.fill(87, 35, 53);
+		app.ellipse(715, 575, 70, 70);
+		app.quad(747, 560, 680, 575, 760, 700, 830, 700);
+		app.fill(90, 37, 47);
+		app.ellipse(app.width/2, 700, 300, 400);
+		app.fill(93, 40, 58);
+		app.ellipse(app.width/2, 485, 200, 200);
+		app.fill(356, 88, 78);
+		app.arc(560, 465, 40, 40, 0, app.PI+app.QUARTER_PI, app.CHORD);
+		app.ellipse(640, 465, 40, 40);
+		app.fill(58, 83, 91);
+		app.arc(560, 466, 33, 33, 0, app.PI+app.QUARTER_PI, app.CHORD);
+		app.ellipse(640, 465, 33, 33);
 	}
 	
 	public void interaccionCthulhu() {
@@ -153,20 +173,20 @@ public class Logica {
 		
 	}
 	
-	public void pintarEstrellas() {
-		for (int i = 0; i < 50; i++) {
-			estrellas.add(new Estrella(app));
-		}
-	}
+//	public void pintarEstrellas() {
+//		for (int i = 0; i < 50; i++) {
+//			estrellas.add(new Estrella(app));
+//		}
+//	}
 	
 	public void interaccionEst() {
 		if(app.key == 'e' || app.key == 'E') {
 			validarEstrellas = true;
 		}
 		
-		if (validarEstrellas = true) {
-			pintarEstrellas();
-		}
+//		if (validarEstrellas = true) {
+//			pintarEstrellas();
+//		}
 		
 		if (validarEstrellas = true && app.key == 'e' || app.key =='E') {
 			validarEstrellas = false;
