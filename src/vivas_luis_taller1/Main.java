@@ -26,6 +26,7 @@ public class Main extends PApplet {
 	
 	public void mousePressed() {
 		logica.click();
+		logica.rocasDer();
 	}
 	
 	public void mouseDragged() {

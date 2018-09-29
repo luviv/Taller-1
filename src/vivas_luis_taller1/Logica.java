@@ -9,12 +9,13 @@ public class Logica {
 	private LinkedList<Figura> figuras;
 	private ArrayList<Burbuja> burbujas;
 	private Estrella[] estrellas;
+	private Esfera[] esferas;
 	private String[] texto;
 	private String[] palabras;
 	private float x, y, tam;
 	private Figura selector;
 	private int contador, opacidad;
-	private boolean arrastrar, pintarTentaculo, validarEstrellas, crearBurbujas, pintarRayo;
+	private boolean arrastrar, pintarTentaculo, validarEstrellas, crearBurbujas, pintarRayo, pintarEsf;
 	private StringBuffer cthu = new StringBuffer("       ");
 
 	public Logica(Main app) {
@@ -38,6 +39,10 @@ public class Logica {
 		for (int i = 0; i < estrellas.length; i++) {
 			estrellas[i] = new Estrella(app);
 		}
+		esferas = new Esfera[4];
+		for (int i = 0; i < esferas.length; i++) {
+			esferas[i] = new Esfera(app);
+		}
 	}
 	
 	public void pintar() {
@@ -48,6 +53,7 @@ public class Logica {
 		pintarEstrellas();
 		interBur();
 		pintarR();
+		pintarEsf();
 		if(!app.mousePressed) {
 			contador = -5000;
 		}
@@ -254,6 +260,15 @@ public class Logica {
 		}
 	}
 	
+	public void rocasDer() {
+		
+		if(app.dist(app.mouseX, app.mouseY, 1200, 600) < 150 || app.dist(app.mouseX, app.mouseY, 1100, 700) < 150 || app.dist(app.mouseX, app.mouseY, 1200, 700) < 150 ) {
+			pintarEsf = true;
+		} 
+		
+	}
+	
+	
 	public void pintarRocasDer() {
 		x = 1200;
 		y = 600; 
@@ -280,6 +295,14 @@ public class Logica {
 	public void interaccionEst() {
 		if(app.key == 'e' || app.key == 'E') {
 			validarEstrellas = !validarEstrellas;
+		}
+	}
+	
+	public void pintarEsf() {
+		if(pintarEsf) {
+			for (int i = 0; i < esferas.length; i++) {
+				esferas[i].pintar();
+			}
 		}
 	}
 }
