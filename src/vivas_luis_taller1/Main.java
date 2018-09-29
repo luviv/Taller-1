@@ -34,7 +34,7 @@ public class Main extends PApplet {
 	}
 	
 	public void mouseReleased() {
-		
+		logica.release();
 	}
 	
 	public void mouseMoved() {

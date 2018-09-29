@@ -10,6 +10,8 @@ public class Logica {
 	private ArrayList<Burbuja> burbujas;
 	private Estrella[] estrellas;
 	private Esfera[] esferas;
+	private Esfera esfera;
+	private Barco barco;
 	private String[] texto;
 	private String[] palabras;
 	private float x, y, tam;
@@ -28,12 +30,11 @@ public class Logica {
 		contador = -5000;
 		opacidad = 100;
 		texto = app.loadStrings("texto.txt");
-//		System.out.println(texto.length);
 		burbujas = new ArrayList<Burbuja>();
 		palabras = app.splitTokens(texto[0]);
 		app.textSize(40);
 		for (int i = 0; i < palabras.length; i++) {
-			System.out.println(palabras[i]);
+			System.out.println(i+". "+palabras[i]);
 		}
 		estrellas = new Estrella[150];
 		for (int i = 0; i < estrellas.length; i++) {
@@ -43,6 +44,10 @@ public class Logica {
 		for (int i = 0; i < esferas.length; i++) {
 			esferas[i] = new Esfera(app);
 		}
+		
+		barco = new Barco(app);
+		
+		esfera = null;
 	}
 	
 	public void pintar() {
@@ -56,6 +61,17 @@ public class Logica {
 		pintarEsf();
 		if(!app.mousePressed) {
 			contador = -5000;
+		}
+		
+		for (int i = 0; i < esferas.length; i++) {
+			if(esfera != null && esferas[i] == esfera) {
+				esferas[i].mover(app.mouseX, app.mouseY);
+				esfera.mover(app.mouseX, app.mouseY);
+			}
+		}
+		barco.pintar();
+		if(barco.getDesplazar()) {
+			barco.mover(app.mouseX);
 		}
 	}
 	
@@ -101,7 +117,30 @@ public class Logica {
 			crearBurbujas = !crearBurbujas;
 		}
 		
-		contador = app.millis();
+		
+		for (int i = 0; i < esferas.length; i++) {
+			if(esferas[i].validar(app.mouseX, app.mouseY)) {
+				esfera = esferas[i];
+			}
+		}
+		
+		if(esfera == null) {
+			contador = app.millis();
+		}
+		
+		barco.validar(app.mouseX, app.mouseY);
+	}
+	
+	public void release() {
+		for (int i = 0; i < esferas.length; i++) {
+			if(esfera == esferas[i] && app.dist(app.mouseX, app.mouseY, app.width/2, 700) < 275) {
+				esferas[i].girar();
+			}
+			esferas[i].setAng((360/4)*i);
+		}
+		
+		esfera = null;
+		barco.setDesplazar(false);
 	}
 	
 	public void pintarFondo() {
@@ -253,6 +292,12 @@ public class Logica {
 		
 		if(app.dist(app.mouseX, app.mouseY, 0, 600) < 150 || app.dist(app.mouseX, app.mouseY, 100, 700) < 150 || app.dist(app.mouseX, app.mouseY, 0, 700) < 150 ) {
 			pintarTentaculo = true;
+			palabras[92] ="se";
+			palabras[93] ="hundira";
+			for (int i = 0; i < palabras.length; i++) {
+				System.out.println(i+". "+palabras[i]);
+			}
+			
 		} else {pintarTentaculo = false;}
 		
 		if(pintarTentaculo == true) {
