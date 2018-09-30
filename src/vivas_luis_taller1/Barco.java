@@ -28,6 +28,9 @@ public class Barco extends Figura {
 		app.rect(x, y+28, 200, 56);
 		app.triangle(x-75, y+28, x, y+28, x, y+84);
 		app.triangle(x+275, y+28, x+200, y+28, x+200, y+84);
+		app.textSize(30);
+		app.fill(45, 61, 88);
+		app.text("VIGILANT", x+20, y+60);
 		stop();
 	}
 	

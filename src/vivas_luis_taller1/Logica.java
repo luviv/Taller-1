@@ -16,7 +16,7 @@ public class Logica {
 	private String[] palabras;
 	private float x, y, tam;
 	private Figura selector;
-	private int contador, opacidad;
+	private int contador, opacidad, opa;
 	private boolean arrastrar, pintarTentaculo, validarEstrellas, crearBurbujas, pintarRayo, pintarEsf;
 	private StringBuffer cthu = new StringBuffer("       ");
 
@@ -57,6 +57,7 @@ public class Logica {
 		pintarRocasDer();
 		pintarEstrellas();
 		interBur();
+		barco.pintar();
 		pintarR();
 		pintarEsf();
 		if(!app.mousePressed) {
@@ -69,10 +70,11 @@ public class Logica {
 				esfera.mover(app.mouseX, app.mouseY);
 			}
 		}
-		barco.pintar();
+		
 		if(barco.getDesplazar()) {
 			barco.mover(app.mouseX);
 		}
+		
 	}
 	
 	public void pintarR() {
@@ -88,6 +90,9 @@ public class Logica {
 				app.quad(538, 50, 613, 50, 575, 100, 500, 100);
 				app.triangle(537, 100, 612, 100, 500, 200);
 				opacidad = 100;
+				
+				palabras[35] = "ahora";
+				palabras[36] = "en";
 			} else {
 				pintarRayo = false;
 			}
@@ -95,6 +100,15 @@ public class Logica {
 			app.fill(0, 0, 100, opacidad);
 			app.rect(0, 0, app.width, app.height);
 			opacidad -= 3;
+		}
+		
+		if(pintarRayo == false) {
+			opa = 100;
+			app.textSize(20);
+			app.fill(229, 38, 44, opa);
+			app.text("manten presionado click", 950, 20);
+		} else {
+			opa = 0;
 		}
 	}
 	
@@ -115,6 +129,12 @@ public class Logica {
 	public void click() {
 		if(app.dist(app.mouseX, app.mouseY, app.width/2, app.height) < 300) {
 			crearBurbujas = !crearBurbujas;
+			palabras[65] = "ha";
+			palabras[66] = "tenido";
+			palabras[67] = "que";
+			palabras[68] = "ser";
+			palabras[69] = "liberado";
+	
 		}
 		
 		
@@ -129,6 +149,10 @@ public class Logica {
 		}
 		
 		barco.validar(app.mouseX, app.mouseY);
+		if(barco.validar(app.mouseX, app.mouseY)) {
+			palabras[31] = "se";
+			palabras[32] = "hundio";
+		}
 	}
 	
 	public void release() {
@@ -170,6 +194,8 @@ public class Logica {
 		
 		if(palabras[0] == "CTHULHU") {
 			pintarCthulhu();
+			palabras[1] = "ha";
+			palabras[2] = "despertado";
 		}
 		interaccionCthulhu();
 	}
@@ -294,14 +320,12 @@ public class Logica {
 			pintarTentaculo = true;
 			palabras[92] ="se";
 			palabras[93] ="hundira";
-			for (int i = 0; i < palabras.length; i++) {
-				System.out.println(i+". "+palabras[i]);
-			}
 			
 		} else {pintarTentaculo = false;}
 		
 		if(pintarTentaculo == true) {
 			pintarTentaculo();
+			
 		}
 	}
 	
@@ -333,6 +357,17 @@ public class Logica {
 			for (int i = 0; i < estrellas.length; i++) {
 				estrellas[i].pintar();
 			}
+			palabras[113] = "las";
+			palabras[114] = "estrellas";
+			palabras[115] = "sobre";
+		}
+		if(validarEstrellas == false) {
+			opa = 100;
+			app.textSize(20);
+			app.fill(229, 38, 44, opa);
+			app.text("presiona 'e'", 8, 20);
+		} else {
+			opa = 0;
 		}
 		
 	}
@@ -347,7 +382,10 @@ public class Logica {
 		if(pintarEsf) {
 			for (int i = 0; i < esferas.length; i++) {
 				esferas[i].pintar();
+				
 			}
+			palabras[120] = "ahora";
+			palabras[121] = "flota";
 		}
 	}
 }
