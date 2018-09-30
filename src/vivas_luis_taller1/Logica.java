@@ -50,6 +50,7 @@ public class Logica {
 		esfera = null;
 	}
 	
+	//Este metodo recolecta los metodos de que pintan todo el lienzo
 	public void pintar() {
 		pintarFondo();
 		letrasCthulhu();
@@ -58,12 +59,14 @@ public class Logica {
 		pintarEstrellas();
 		interBur();
 		barco.pintar();
-		pintarR();
 		pintarEsf();
+		pintarR();
+		//Condición para el contador para la interacción del rayo
 		if(!app.mousePressed) {
 			contador = -5000;
 		}
 		
+		//For para la interacción de las esferas
 		for (int i = 0; i < esferas.length; i++) {
 			if(esfera != null && esferas[i] == esfera) {
 				esferas[i].mover(app.mouseX, app.mouseY);
@@ -71,12 +74,14 @@ public class Logica {
 			}
 		}
 		
+		//Condición para la interacción del barco
 		if(barco.getDesplazar()) {
 			barco.mover(app.mouseX);
 		}
 		
 	}
 	
+	//Este metodo pinta el rayo
 	public void pintarR() {
 		if(app.millis()-contador > 950 && app.millis()-contador < 1050) {
 			pintarRayo = true;
@@ -112,6 +117,7 @@ public class Logica {
 		}
 	}
 	
+	//Este metodo se encarga de la interacción de las burbujas
 	public void interBur() {
 		if(app.frameCount%20 == 0 && crearBurbujas) {
 			burbujas.add(new Burbuja(app));
@@ -126,6 +132,7 @@ public class Logica {
 		}
 	}
 	
+	//Este metodo se encarga de todas las interacción que tengan que ver con clickear
 	public void click() {
 		if(app.dist(app.mouseX, app.mouseY, app.width/2, app.height) < 300) {
 			crearBurbujas = !crearBurbujas;
@@ -155,6 +162,7 @@ public class Logica {
 		}
 	}
 	
+	//Este metodo se encarga de lo que pasa al soltar el click
 	public void release() {
 		for (int i = 0; i < esferas.length; i++) {
 			if(esfera == esferas[i] && app.dist(app.mouseX, app.mouseY, app.width/2, 700) < 275) {
@@ -167,6 +175,7 @@ public class Logica {
 		barco.setDesplazar(false);
 	}
 	
+	//Este metodo pinta el fondo del lienzo
 	public void pintarFondo() {
 		app.background(229, 52, 33);
 		app.noStroke();
@@ -183,6 +192,7 @@ public class Logica {
 
 	}
 	
+	//Este metodo pinta las letras que ayudan al usuario a la interacción de Cthulhu
 	public void letrasCthulhu() {
 		app.textSize(50);
 		app.fill(159, 41, 33);
@@ -199,7 +209,7 @@ public class Logica {
 		}
 		interaccionCthulhu();
 	}
-	
+	//Este metodo pinta al personaje Cthulhu cuando se cumple la condición
 	public void pintarCthulhu() {
 		app.noStroke();
 		app.ellipseMode(app.CENTER);
@@ -248,7 +258,7 @@ public class Logica {
 		app.arc(640, 466, 33, 33, -app.QUARTER_PI, app.PI, app.CHORD);
 
 	}
-	
+	//Este metodo se encarga de la interacción de escribir la palabra "CTHULHU"
 	public void interaccionCthulhu() {
 		String temp = cthu.toString();
 		int index = 0;
@@ -277,7 +287,7 @@ public class Logica {
 			palabras[0] = "CTHULHU";
 		}
 	}
-	
+	//Este metodo pinta las rocas de la izquierda
 	public void pintarRocasIz() {
 		x = 0;
 		y = 600; 
@@ -292,7 +302,7 @@ public class Logica {
 		
 		rocasIz();
 	}
-	
+	//Este metodo pinta el tentaculo si se cumple la condición
 	public void pintarTentaculo() {
 		x = 240;
 		y= 378;
@@ -313,7 +323,7 @@ public class Logica {
 			y += 34;
 		}
 	}
-	
+	//Este metodo se encarga de la interacción del tentaculo
 	public void rocasIz() {
 		
 		if(app.dist(app.mouseX, app.mouseY, 0, 600) < 150 || app.dist(app.mouseX, app.mouseY, 100, 700) < 150 || app.dist(app.mouseX, app.mouseY, 0, 700) < 150 ) {
@@ -328,7 +338,7 @@ public class Logica {
 			
 		}
 	}
-	
+	//Este metodo se encarga de la interacción de las esferas
 	public void rocasDer() {
 		
 		if(app.dist(app.mouseX, app.mouseY, 1200, 600) < 150 || app.dist(app.mouseX, app.mouseY, 1100, 700) < 150 || app.dist(app.mouseX, app.mouseY, 1200, 700) < 150 ) {
@@ -337,7 +347,7 @@ public class Logica {
 		
 	}
 	
-	
+	//Este metodo pinta las rocas de la derecha
 	public void pintarRocasDer() {
 		x = 1200;
 		y = 600; 
@@ -352,6 +362,7 @@ public class Logica {
 		
 	}
 	
+	//Este metodo se encarga de la interacción de las estrellas
 	public void pintarEstrellas() {
 		if(validarEstrellas) {
 			for (int i = 0; i < estrellas.length; i++) {
@@ -372,12 +383,14 @@ public class Logica {
 		
 	}
 	
+	//Este metodo valida la interacción de las estrellas
 	public void interaccionEst() {
 		if(app.key == 'e' || app.key == 'E') {
 			validarEstrellas = !validarEstrellas;
 		}
 	}
 	
+	//Este metodo pinta las esferas
 	public void pintarEsf() {
 		if(pintarEsf) {
 			for (int i = 0; i < esferas.length; i++) {
